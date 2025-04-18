@@ -10,7 +10,7 @@ Incidents is a MERN stack platform where users can share real-life incidents—w
 
 💬 Commenting System
 
-🎭 User Profiles (with stats like points, incident count, etc.)
+🎭 User Profiles (with stats like points, incident count, etc)
 
 🏆 Leaderboard (Top contributors)
 
