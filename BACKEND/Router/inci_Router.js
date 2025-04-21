@@ -13,47 +13,7 @@ Router.post('/inci', async (req, res) => {
 });
 
 
-Router.get('/inci', async (req, res) => {
-    try {
-        const incidents = await Incident.find(); 
-        res.status(200).json(incidents);
-    } catch (err) {
-        res.status(404).json({ message: err.message }); 
-    }
-});
 
-Router.put('/inci/:id', async (req, res) => {
-    const { id } = req.params;  
-    const { description } = req.body; 
-    try {
-        const updatedIncident = await Incident.findByIdAndUpdate(
-            id, 
-            { description }, 
-            { new: true } 
-        );
-       if (!updatedIncident) {
-            return res.status(404).json({ message: "Incident not found" });
-        }
-        res.status(200).json(updatedIncident);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
-
-
-Router.delete('/inci/:id',async(req,res)=>{
-    try{
-        const update=await Incident.findByIdAndDelete(req.params.id)
-        if (!update) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        res.status(201).json({message:"User deleted successfully"})
-
-    }
-    catch{
-        res.status(500).json({message:err.message})
-    }
-})
 
 
 module.exports = Router;
