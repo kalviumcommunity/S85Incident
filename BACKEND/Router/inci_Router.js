@@ -13,6 +13,16 @@ Router.post('/inci', async (req, res) => {
 });
 
 
+Router.get('/inci', async (req, res) => {
+    try {
+        const incidents = await Incident.find(); 
+        res.status(200).json(incidents);
+    } catch (err) {
+        res.status(404).json({ message: err.message }); 
+    }
+});
+
+
 
 
 
