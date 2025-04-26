@@ -13,7 +13,7 @@ const communitySchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        maxlength: 500
+        
     },
     
     members: [{
