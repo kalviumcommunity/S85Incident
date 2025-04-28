@@ -5,8 +5,11 @@ const incidentSchema=mongoose.Schema({
         type:String,
         minlength:30,
         maxlength:300,
-    }
-    
+    },
+    photo: {
+        type: String,
+        default: null
+      }
 
 
 })
