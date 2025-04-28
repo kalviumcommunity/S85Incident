@@ -1,11 +1,15 @@
 const express = require('express');
 const Incident = require("../model/incident"); 
 const Router = express.Router();
+const uploadd =require("../multer/upload")
 
-Router.post('/inci', async (req, res) => {
+const upload=uploadd();
+Router.post('/inci', upload.single('photo'), async (req, res) => {
     const { description } = req.body;
+    const photo = req.file ? req.file.filename : null;  
+
     try {
-        const newIncident = await Incident.create({ description });
+        const newIncident = await Incident.create({ description, photo });  
         res.status(201).json(newIncident);
     } catch (err) {
         res.status(500).json({ message: err.message });
