@@ -11,8 +11,7 @@ router.post('/user', async (req, res) => {
         if (!username || !phoneNumber|| !email || !password ) {
             return res.status(400).json({ message: "Missing required fields" });
         }
-        const saltRounds=10;
-        const haash=await bcrypt.hash(password,saltRounds)
+       
 
         const create = await User.create({ username, phoneNumber, email,password:haash });
         res.json(create);
