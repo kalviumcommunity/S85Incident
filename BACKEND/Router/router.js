@@ -3,10 +3,11 @@ const router = express.Router();
 const User = require("../model/Users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const verifyToken = require("../middleware/auth");
 require("dotenv").config({ path: "./config/.env" });
 
-// Register User
-router.post('/user', async (req, res) => {
+
+router.post('/user/signup', async (req, res) => {
     const { username, email, phoneNumber, password } = req.body;
     try {
         if (!username || !phoneNumber || !email || !password) {
@@ -21,7 +22,6 @@ router.post('/user', async (req, res) => {
     }
 });
 
-// Login User
 router.post('/user/login', async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -43,23 +43,7 @@ router.post('/user/login', async (req, res) => {
     }
 });
 
-// Middleware to verify token
-const verifyToken = (req, res, next) => {
-    const token = req.headers["authorization"];
-    if (!token) {
-        return res.status(401).json({ error: "Access denied, no token provided" });
-    }
 
-    try {
-        const decoded = jwt.verify(token.split(" ")[1], process.env.JWT_Secret);
-        req.user = decoded;
-        next();
-    } catch (error) {
-        return res.status(403).json({ error: "Invalid token" });
-    }
-};
-
-// Get user info (Protected)
 router.get('/user', verifyToken, async (req, res) => {
     try {
         const userId = req.user.id;
@@ -70,7 +54,7 @@ router.get('/user', verifyToken, async (req, res) => {
     }
 });
 
-// Delete user by ID
+
 router.delete('/user/:id', async (req, res) => {
     try {
         const deletedUser = await User.findByIdAndDelete(req.params.id);
